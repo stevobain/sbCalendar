@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace sbCalendar
+namespace sbCalendar.Forms.Views
 {
-    public partial class Form1 : Form
+    public partial class ViewReport : Form
     {
-        public Form1()
+        public ViewReport()
         {
             InitializeComponent();
         }

@@ -1,7 +1,7 @@
 ﻿
-namespace sbCalendar
+namespace sbCalendar.Forms
 {
-    partial class Form1
+    partial class AddCustomerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -32,10 +32,9 @@ namespace sbCalendar
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.Text = "AddCustomerForm";
         }
 
         #endregion
     }
 }
-
