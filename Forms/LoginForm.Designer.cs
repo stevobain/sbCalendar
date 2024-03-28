@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 
 namespace sbCalendar.Forms
 {
@@ -38,13 +36,15 @@ namespace sbCalendar.Forms
             this.usernameTextBox = new System.Windows.Forms.TextBox();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
+            this.regionLabel = new System.Windows.Forms.Label();
+            this.infoLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // appNameLabel
             // 
             this.appNameLabel.AutoSize = true;
             this.appNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.appNameLabel.Location = new System.Drawing.Point(85, 32);
+            this.appNameLabel.Location = new System.Drawing.Point(110, 23);
             this.appNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.appNameLabel.Name = "appNameLabel";
             this.appNameLabel.Size = new System.Drawing.Size(147, 29);
@@ -97,7 +97,7 @@ namespace sbCalendar.Forms
             // 
             this.loginButton.AutoSize = true;
             this.loginButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.loginButton.Location = new System.Drawing.Point(142, 229);
+            this.loginButton.Location = new System.Drawing.Point(146, 210);
             this.loginButton.Margin = new System.Windows.Forms.Padding(2);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(70, 28);
@@ -106,12 +106,32 @@ namespace sbCalendar.Forms
             this.loginButton.UseVisualStyleBackColor = true;
             this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
+            // regionLabel
+            // 
+            this.regionLabel.AutoSize = true;
+            this.regionLabel.Location = new System.Drawing.Point(63, 260);
+            this.regionLabel.Name = "regionLabel";
+            this.regionLabel.Size = new System.Drawing.Size(104, 13);
+            this.regionLabel.TabIndex = 6;
+            this.regionLabel.Text = "You are here: en-US";
+            // 
+            // infoLabel
+            // 
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Location = new System.Drawing.Point(41, 67);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(260, 13);
+            this.infoLabel.TabIndex = 7;
+            this.infoLabel.Text = "This login page translates between en-US and es-US.";
+            // 
             // LoginForm
             // 
             this.AcceptButton = this.loginButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(355, 282);
+            this.Controls.Add(this.infoLabel);
+            this.Controls.Add(this.regionLabel);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.usernameTextBox);
@@ -137,5 +157,7 @@ namespace sbCalendar.Forms
         private System.Windows.Forms.TextBox usernameTextBox;
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Button loginButton;
+        private System.Windows.Forms.Label regionLabel;
+        private System.Windows.Forms.Label infoLabel;
     }
 }

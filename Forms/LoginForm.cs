@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Security.Authentication;
@@ -14,6 +13,7 @@ namespace sbCalendar.Forms
             InitializeComponent();
         }
 
+        RegionInfo regionInfo;
         CultureInfo cultureInfo;
         StreamWriter streamWriter;
 
@@ -94,17 +94,22 @@ namespace sbCalendar.Forms
             // Controls on form load text using current culture
             CultureInfo.CurrentCulture.ClearCachedData();
             cultureInfo = CultureInfo.CurrentCulture;
-            if (cultureInfo.Name.Contains("es-"))
+            regionInfo = RegionInfo.CurrentRegion;
+            if (cultureInfo.Name == "es-US")
             {
                 usernameLabel.Text = "Usuario";
                 passwordLabel.Text = "Contraseña";
                 loginButton.Text = "Acceso";
+                regionLabel.Text = $"Usted está aquí: {regionInfo.NativeName}";
+                infoLabel.Text = "Esta página de inicio de sesión se traduce entre es-US y en-US.";
             }
             else
             {
                 usernameLabel.Text = "Username";
                 passwordLabel.Text = "Password";
                 loginButton.Text = "Log In";
+                regionLabel.Text = $"You are here: {regionInfo.EnglishName}";
+                infoLabel.Text = "This login page translates between en-US and es-US.";
             }
         }
     }
