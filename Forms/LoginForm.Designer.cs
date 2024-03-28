@@ -1,4 +1,8 @@
-﻿namespace sbCalendar.Forms
+﻿
+
+using Microsoft.Win32;
+
+namespace sbCalendar.Forms
 {
     partial class LoginForm
     {
@@ -119,6 +123,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.Load += new System.EventHandler(this.loginForm_Load);
+            SystemEvents.UserPreferenceChanged += new UserPreferenceChangedEventHandler(this.loginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Security.Authentication;
@@ -25,7 +26,7 @@ namespace sbCalendar.Forms
             // If the username or password textboxes are empty, an error message is displayed using the current UI language (EN, ES)
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                switch (CultureInfo.CurrentUICulture.ToString())
+                switch (CultureInfo.CurrentCulture.ToString())
                 {
                     case "es-US":
                         MessageBox.Show("Debes ingresar un nombre de usuario y contraseña para continuar.", "sbCalendar", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -69,7 +70,7 @@ namespace sbCalendar.Forms
                     }
                     else
                     {
-                        switch (CultureInfo.CurrentUICulture.ToString())
+                        switch (CultureInfo.CurrentCulture.ToString())
                         {                            
                             case "es-US":
                                 MessageBox.Show("El nombre de usuario y/o contraseña es incorrecto.", "sbCalendar", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -90,9 +91,10 @@ namespace sbCalendar.Forms
 
         private void loginForm_Load(object sender, EventArgs e)
         {
-            // Controls on form load text using current UI language (EN, ES)
-            cultureInfo = CultureInfo.CurrentUICulture;
-            if (cultureInfo.Name == "es-US")
+            // Controls on form load text using current culture
+            CultureInfo.CurrentCulture.ClearCachedData();
+            cultureInfo = CultureInfo.CurrentCulture;
+            if (cultureInfo.Name.Contains("es-"))
             {
                 usernameLabel.Text = "Usuario";
                 passwordLabel.Text = "Contraseña";
