@@ -108,44 +108,48 @@ namespace sbCalendar.Forms.Customers
         {
             DialogResult result;
 
-            result = MessageBox.Show("Are you sure you want to delete this customer?", "sbCalendar - View Customers", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            result = MessageBox.Show("Are you sure you want to delete this customer?", "sbCalendar - Delete Customer", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
             if (result == DialogResult.Yes)
             {
-                // delete selected row (cast as Customer object)
-                Customer selectedCustomer = new Customer();
-
-                foreach (DataGridViewRow row in customersDGV.SelectedRows)
+                try
                 {
+                    // delete selected row (cast as Customer object)
+                    Customer selectedCustomer = new Customer();
+
+                    foreach (DataGridViewRow row in customersDGV.SelectedRows)
+                    {
+                        foreach (DataGridViewColumn col in customersDGV.Columns)
+                        {
+                            if (col.Name == "CustomerID")
+                            {
+                                selectedCustomer = customers.Where(x => x.CustomerID == (int)row.Cells[col.Index].Value).Select(x => x).First();
+                            }
+                        }
+
+                        // Call the DeleteCustomer method to delete the selected customer and all related data from the database
+                        clientScheduleRepository.DeleteCustomer(selectedCustomer);
+
+                        MessageBox.Show("The customer has been deleted successfully.", "sbCalendar - Delete Customer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    // Clears/refreshes the data grid view to show new customers
+                    customersDGV.DataSource = null;
+                    customersDGV.Rows.Clear();
+                    customers = clientScheduleRepository.GetAllCustomers();
+                    customersDGV.Update();
+                    customersDGV.DataSource = customers;
+
                     foreach (DataGridViewColumn col in customersDGV.Columns)
                     {
-                        if (col.Name == "CustomerID")
-                        {
-                            selectedCustomer = customers.Where(x => x.CustomerID == (int)row.Cells[col.Index].Value).Select(x => x).First();
-                        }
+                        // Hides column for Address object column from view
+                        if (col.Name == "Address")
+                            customersDGV.Columns[col.Name].Visible = false;
                     }
-
-                    // Call the DeleteCustomer method to delete the selected customer and all related data from the database
-                    clientScheduleRepository.DeleteCustomer(selectedCustomer);
-
-                    MessageBox.Show("The customer has been deleted successfully.", "sbCalendar - View Customers", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
                 }
-
-                // Clears/refreshes the data grid view to show new customers
-                customersDGV.DataSource = null;
-                customersDGV.Rows.Clear();
-                customers = clientScheduleRepository.GetAllCustomers();
-                customersDGV.Update();
-                customersDGV.DataSource = customers;
-
-                foreach (DataGridViewColumn col in customersDGV.Columns)
+                catch (Exception ex)
                 {
-                    // Hides column for Address object column from view
-                    if (col.Name == "Address")
-                        customersDGV.Columns[col.Name].Visible = false;
-                }
+                    MessageBox.Show(ex.ToString(), "sbCalendar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }                
             }
         }
 

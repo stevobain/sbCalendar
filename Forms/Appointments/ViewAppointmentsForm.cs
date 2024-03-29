@@ -179,33 +179,40 @@ namespace sbCalendar.Forms.Appointments
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to cancel this appointment?", "sbCalendar - Appointments", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are you sure you want to cancel this appointment?", "sbCalendar - Delete Appointment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                if (customerAppointmentsDGV.SelectedRows.Count > 0)
+                try
                 {
-                    foreach (DataGridViewRow row in customerAppointmentsDGV.SelectedRows)
+                    if (customerAppointmentsDGV.SelectedRows.Count > 0)
                     {
-                        foreach (DataGridViewColumn col in customerAppointmentsDGV.Columns)
+                        foreach (DataGridViewRow row in customerAppointmentsDGV.SelectedRows)
                         {
-                            if (col.Name == "AppointmentID")
+                            foreach (DataGridViewColumn col in customerAppointmentsDGV.Columns)
                             {
-                                selectedCustomerAppointment = appointments.Where(x => x.AppointmentID == (int)row.Cells[col.Index].Value).Select(x => x).First();
+                                if (col.Name == "AppointmentID")
+                                {
+                                    selectedCustomerAppointment = appointments.Where(x => x.AppointmentID == (int)row.Cells[col.Index].Value).Select(x => x).First();
+                                }
                             }
                         }
+
+                        clientScheduleRepository.DeleteSpecificCustomerAppt(selectedCustomerAppointment);
+
+                        GetSelectedCustomerAppointments(selectedCustomer);
+
+
+                        initialSelectedCustomerAppointmentsLoad = true;
+                        deleteButton.Enabled = false;
+                        updateButton.Enabled = false;
+                        customersDGV_SelectionChanged(sender, e);
                     }
-
-                    clientScheduleRepository.DeleteSpecificCustomerAppt(selectedCustomerAppointment);
-
-                    GetSelectedCustomerAppointments(selectedCustomer);
-
-
-                    initialSelectedCustomerAppointmentsLoad = true;
-                    deleteButton.Enabled = false;
-                    updateButton.Enabled = false;
-                    customersDGV_SelectionChanged(sender, e);
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred when deleting the appointment information.\n{ex}", "sbCalendar - Delete Appointment", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }                
             }
             else
             {

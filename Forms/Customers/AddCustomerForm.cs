@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace sbCalendar.Forms.Customers
@@ -24,8 +25,14 @@ namespace sbCalendar.Forms.Customers
 
         private void addCustomerButton_Click(object sender, EventArgs e)
         {
+            // Checks if phone number has characters that are not -'s and #'s
+            string pattern = @"^[0-9\-]+$";
+            if (!Regex.IsMatch(phoneTextBox.Text, pattern))
+            {
+                MessageBox.Show("Phone number can only contain numbers and dashes(-).", "sbCalendar", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
             // Checks to see if any textbox on the form is null or whitespace
-            if (Controls.OfType<TextBox>().Any(x => string.IsNullOrWhiteSpace(x.Text) && x.Name != "address2TextBox"))
+            else if (Controls.OfType<TextBox>().Any(x => string.IsNullOrWhiteSpace(x.Text) && x.Name != "address2TextBox"))
             {
                 BuildErrorMessage();
             }
